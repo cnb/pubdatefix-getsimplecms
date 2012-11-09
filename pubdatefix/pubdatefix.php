@@ -1,7 +1,7 @@
 <?php
 /** 
 PubDateFix - plugin for GetSimple CMS
-version 0.1 (beta) 
+version 0.2 (beta) 
 Makes GS page date field fixed (and editable), plus new replacement lastUpdate field 
 
 Helper functions / template tags:
@@ -27,7 +27,7 @@ $thisfile = basename(__FILE__, ".php");
 register_plugin(
 	$thisfile,
 	'pubDateFix',
-	'0.1 beta',
+	'0.2 beta',
 	'Carlos Navarro',
 	'http://www.cyberiada.org/cnb/',
 	'Makes pubDate field fixed and editable, adds lastUpdate field'
@@ -48,7 +48,7 @@ function return_page_lastupdate($i = "l, F jS, Y - g:i A") {
 			date_default_timezone_set($TIMEZONE);
 		}
 	}
-	if (isset($data_edit->lastUpdate)) {
+	if (isset($data_index->lastUpdate)) {
 		return date($i, strtotime($data_index->lastUpdate));
 	} else {
 		return date($i, strtotime($data_index->pubDate));

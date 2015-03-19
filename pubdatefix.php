@@ -28,7 +28,7 @@ To disable the datepicker, insert this in gsconfig.php:
 
 */
 
-define('PUBDATEFIXVERSION', '0.3 beta');
+define('PUBDATEFIXVERSION', '0.3');
 
 // register plugin
 $thisfile = basename(__FILE__, ".php");

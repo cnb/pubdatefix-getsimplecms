@@ -25,60 +25,60 @@ define('GSEDITDATEFORMAT','Y-m-d H:i');
 // register plugin
 $thisfile = basename(__FILE__, ".php");
 register_plugin(
-	$thisfile,
-	'pubDateFix',
-	'0.2 beta',
-	'Carlos Navarro',
-	'http://www.cyberiada.org/cnb/',
-	'Makes pubDate field fixed and editable, adds lastUpdate field'
+  $thisfile,
+  'pubDateFix',
+  '0.2 beta',
+  'Carlos Navarro',
+  'http://www.cyberiada.org/cnb/',
+  'Makes pubDate field fixed and editable, adds lastUpdate field'
 );
 
 add_action('edit-extras','lastUpdate_edit'); 
 add_action('changedata-save', 'lastUpdate_save');
 
 function get_page_lastupdate($i = "l, F jS, Y - g:i A") {
-	echo return_page_lastupdate($i);
+  echo return_page_lastupdate($i);
 }
 
 function return_page_lastupdate($i = "l, F jS, Y - g:i A") {
-	global $data_index;
-	global $TIMEZONE;
-	if ($TIMEZONE != '') {
-		if (function_exists('date_default_timezone_set')) {
-			date_default_timezone_set($TIMEZONE);
-		}
-	}
-	if (isset($data_index->lastUpdate)) {
-		return date($i, strtotime($data_index->lastUpdate));
-	} else {
-		return date($i, strtotime($data_index->pubDate));
-	}
+  global $data_index;
+  global $TIMEZONE;
+  if ($TIMEZONE != '') {
+    if (function_exists('date_default_timezone_set')) {
+      date_default_timezone_set($TIMEZONE);
+    }
+  }
+  if (isset($data_index->lastUpdate)) {
+    return date($i, strtotime($data_index->lastUpdate));
+  } else {
+    return date($i, strtotime($data_index->pubDate));
+  }
 }
 
 function lastUpdate_save() {
-	global $xml;
-	if (isset($_POST['pubdatefix']) && strval(strtotime($_POST['pubdatefix']))!='') {
-		unset($xml->pubDate);
-		$xml->addChild('pubDate', date('r',strtotime($_POST['pubdatefix'])));
-	}
-	$xml->addChild('lastUpdate', date('r')); // now
+  global $xml;
+  if (isset($_POST['pubdatefix']) && strval(strtotime($_POST['pubdatefix']))!='') {
+    unset($xml->pubDate);
+    $xml->addChild('pubDate', date('r',strtotime($_POST['pubdatefix'])));
+  }
+  $xml->addChild('lastUpdate', date('r')); // now
 }
 
 function lastUpdate_edit() {
-	global $data_edit;
-	echo '<tr><td colspan="2"><b>Publication Date:</b> ( example: ',date(GSEDITDATEFORMAT, strtotime(date('r'))),' )
-		<br />
-		<input class="text short" id="pubdatefix" name="pubdatefix" type="text" value="';
-	if (isset($data_edit->pubDate)) { echo date(GSEDITDATEFORMAT, strtotime($data_edit->pubDate)); }
-	echo '" /></td></tr>';
-	
-	// backend last saved:
-	global $pubDate;
-	if (isset($data_edit->lastUpdate)) {
-		$pubDate = $data_edit->lastUpdate;
-	} else {
-		if (isset($data_edit->pubDate)) {
-			$pubDate = $data_edit->pubDate;
-		}
-	}
+  global $data_edit;
+  echo '<tr><td colspan="2"><b>Publication Date:</b> ( example: ',date(GSEDITDATEFORMAT, strtotime(date('r'))),' )
+    <br />
+    <input class="text short" id="pubdatefix" name="pubdatefix" type="text" value="';
+  if (isset($data_edit->pubDate)) { echo date(GSEDITDATEFORMAT, strtotime($data_edit->pubDate)); }
+  echo '" /></td></tr>';
+  
+  // backend last saved:
+  global $pubDate;
+  if (isset($data_edit->lastUpdate)) {
+    $pubDate = $data_edit->lastUpdate;
+  } else {
+    if (isset($data_edit->pubDate)) {
+      $pubDate = $data_edit->pubDate;
+    }
+  }
 }

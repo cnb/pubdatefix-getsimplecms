@@ -11,18 +11,18 @@ If you want to display or use the *lastUpdate* field, you can use the helper fun
 
 (they work exactly like GetSimple's `get_page_date()` and `return_page_date()` do when this plugin is not installed)
 
-A new editable Publication Date field is displayed in Edit Page -- Options. Note that right now this editor is rudimentary (no fancy date picker) and has no error checking: If the date/time entered is invalid, it will be saved as the current datetime (like lastUpdate).
+A new editable Publication Date field is displayed in Edit Page -- Options. 
 
-You can define the date[time] editing format by changing the GSEDITDATEFORMAT constant in the plugin.
+Default date[time] editing format is 'Y-m-d H:i' (for e.g. 2015-12-31 23:59)    
+You can define your custom format in your site's gsconfig.php file.   
+Some examples:
 
-Valid format examples that work (reverse order recommended):
+	 define('PUBDATEFORMAT','Y/m/d H.i'); // ==> 2015/12/31 23.59
+	 define('PUBDATEFORMAT','Y-m-d');     // ==> 2015-12-31
+	...
 
-    'Y-m-d H:i' => 2011-12-31 01:01
-    'Y-m-d'     => 2011-12-31
-    'Ymd'     => 20111231
+To disable the datepicker, insert this in gsconfig.php:
 
-etc... (change the "-" for a "/", "." or another symbol -or none- if you wish)
+    define('PUBDATEPICKER', false);
 
-Install Instructions:
-
-Unzip and put *pubdatefix.php* in your site's plugins folder.
+(jQuery DateTimePicker by XDSoft <http://xdsoft.net/jqplugins/datetimepicker/>)
